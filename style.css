@@ -86,7 +86,7 @@
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
   }
@@ -113,7 +113,7 @@
   }
 
   h1 {
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: system-ui, sans-serif;
     font-weight: 800;
     letter-spacing: -0.01em;
     font-size: clamp(1.5rem, 3vw, 2rem);
@@ -139,7 +139,7 @@
   }
 
   .semester-tab {
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: system-ui, sans-serif;
     flex: none;
     font-size: 0.85rem;
     font-weight: 600;
@@ -196,7 +196,7 @@
   }
 
   .month-label {
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: system-ui, sans-serif;
     font-weight: 700;
     letter-spacing: 0.02em;
     font-size: 1.1rem;
@@ -296,24 +296,22 @@
   .day-cell.empty { visibility: hidden; }
 
   .day-cell.class-day {
-    font-weight: 600;
+    font-weight: 700;
+    color: var(--ink);
   }
 
   .day-cell.has-event {
     background: var(--neutral-soft);
-    color: var(--ink);
     font-weight: 600;
   }
 
   .day-cell.has-holiday {
     background: var(--crimson-soft);
-    color: var(--ink);
     font-weight: 600;
   }
 
   .day-cell.has-milestone {
     background: var(--gold-soft);
-    color: var(--gold);
     font-weight: 700;
   }
 
@@ -374,7 +372,7 @@
   }
 
   .event-day {
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: system-ui, sans-serif;
     font-weight: 700;
     font-size: 0.95rem;
     color: var(--navy);
@@ -422,7 +420,7 @@
   }
 
   footer.meta h3 {
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: system-ui, sans-serif;
     font-weight: 700;
     font-size: 1rem;
     color: var(--ink);
