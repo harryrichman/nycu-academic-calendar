@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NYCU 2026–2027 Academic Calendar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="kicker">National Yang Ming Chiao Tung University</p>
+    <h1>2026–2027 Academic Calendar</h1>
+  </div>
+</header>
+
+<nav class="semester-nav">
+  <div class="semester-nav-inner">
+    <button type="button" class="semester-tab active" data-semester="fall">Fall Semester</button>
+    <button type="button" class="semester-tab" data-semester="spring">Spring Semester</button>
+  </div>
+</nav>
+
+<p class="semester-subtitle" id="semester-subtitle">Fall Semester · August 2026 through January 2027</p>
+
+<main>
+  <div id="fall-panel" class="semester-panel"></div>
+  <div id="spring-panel" class="semester-panel" hidden></div>
+</main>
+
+<footer class="meta">
+  <h3>Approval record</h3>
+  <table>
+    <tr><td><strong>March 25, 2026</strong></td><td>Passed by the 6th University Executive Meeting, spring semester, Academic Year 2025–2026</td></tr>
+  </table>
+
+  <h3>Notes</h3>
+  <ol>
+    <li>Any changes to the holidays will be notified by an announcement.</li>
+    <li>Any adjustments to scheduled events or dates shall follow the minutes of relevant university-level meetings and be announced separately by the responsible units.</li>
+    <li>Deadline for application for direct admission to a PhD program: if the research institute in question has another application schedule, please follow its regulations.</li>
+  </ol>
+
+  <p class="revision-note"><strong>Revised May 14, 2026:</strong>
+    Per the minutes of the Student Affairs Meeting for the 2nd semester of Academic Year 2025 (held May 6, 2026), 
+    Commencement has been rescheduled to June 5, 2027 (Sat), and College Commencement has been rescheduled to June 6, 2027 (Sun).
+  </p>
+
+  <p class="approval">Recreated from the official NYCU 2026–2027 Fall and Spring Semester academic calendar PDFs using Claude Sonnet 5.</p>
+</footer>
+
+<script>
+  const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const MONTH_ABBR = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+
+  // firstWeekday: 0 = Sunday ... 6 = Saturday, for the 1st of the month
+  const FALL_MONTHS = [
+    {
+      id: "aug-2026", label: "August 2026", short: "Aug '26",
+      year: 2026, monthIndex: 7,
+      firstWeekday: 6, days: 31,
+      events: [
+        [1, "Fall Semester begins", "milestone"],
+        [1, "Application for minor studies (including graduate and degree programs) and double majors begins (Aug. 1 – Sep. 24)"],
+        [10, "Application for degree programs as international students (Spring 2027) begins"],
+        [29, "Freshmen Dorm Move-in (Aug. 29–30)"],
+        [31, "Phase 3 of Course Selection (Aug. 31 – Sep. 3)"],
+        [31, "Summer courses end"],
+        [31, "Freshmen Orientation Week (Aug. 31 – Sep. 4)"]
+      ]
+    },
+    {
+      id: "sep-2026", label: "September 2026", short: "Sep '26",
+      year: 2026, monthIndex: 8,
+      firstWeekday: 2, days: 30,
+      events: [
+        [2, "Matriculation Ceremony"],
+        [7, "Fall Semester classes begin", "milestone"],
+        [7, "Course add/drop (Sep. 7–21) and intercollegiate course (Sep. 7–18) selection starts"],
+        [9, "Deadline for payment of tuition fees"],
+        [11, "Deadline for grade corrections (for Spring 2026)"],
+        [14, "The \u2018Friendly Campus Week\u2019 activities (Sep. 14–18)"],
+        [18, "Deadline for credit exemption"],
+        [18, "Deadline for intercollegiate course"],
+        [21, "Deadline for course add/drop"],
+        [23, "Teacher\u2019s Day Commendation Ceremony"],
+        [25, "The Mid-Autumn Festival (no class)", "holiday"],
+        [28, "Teachers\u2019 Day (no class)", "holiday"],
+        [30, "Deadline for application for degree programs as international students (Spring 2027)"]
+      ]
+    },
+    {
+      id: "oct-2026", label: "October 2026", short: "Oct '26",
+      year: 2026, monthIndex: 9,
+      firstWeekday: 4, days: 31,
+      events: [
+        [9, "Make-up holiday as The National Day (no class)", "holiday"],
+        [10, "The National Day", "holiday"],
+        [16, "Deadline for getting a two-thirds (2/3) refund for graduates and those with a temporary leave or suspension from school"],
+        [16, "Deadline for continuing education proposals"],
+        [25, "Taiwan Restoration Day", "holiday"],
+        [26, "Make-up holiday as Taiwan Restoration Day (no class)", "holiday"],
+        [27, "Mid-term Exams (Oct. 27–30)"],
+        [27, "Academic warning begins"]
+      ]
+    },
+    {
+      id: "nov-2026", label: "November 2026", short: "Nov '26",
+      year: 2026, monthIndex: 10,
+      firstWeekday: 0, days: 30,
+      events: [
+        [2, "The Academic Warning System is available for faculty members"],
+        [11, "Sports Day – the preliminaries"],
+        [16, "Academic Warning – offering needed support to students with low academic standing"],
+        [18, "Sports Day (no daytime class)"],
+        [20, "Deadline for getting a one-third (1/3) refund for graduates and those with a temporary leave or suspension from school"]
+      ]
+    },
+    {
+      id: "dec-2026", label: "December 2026", short: "Dec '26",
+      year: 2026, monthIndex: 11,
+      firstWeekday: 2, days: 31,
+      events: [
+        [4, "Deadline for course withdrawal"],
+        [16, "University Council Meeting"],
+        [20, "Application for degree programs as international students (Fall 2027) begins"],
+        [21, "Final Exams (Dec. 21–24)", "milestone"],
+        [25, "Constitution Day (no class)", "holiday"],
+        [28, "Winter vacation begins (Dec. 28 – Feb. 12, 2027)", "milestone"],
+        [28, "Phase 1 of Course Selection (Dec. 28–31)"]
+      ]
+    },
+    {
+      id: "jan-2027", label: "January 2027", short: "Jan '27",
+      year: 2027, monthIndex: 0,
+      firstWeekday: 5, days: 31,
+      events: [
+        [1, "New Year\u2019s Day", "holiday"],
+        [4, "Phase 2 of Course Selection (Jan. 4–6)"],
+        [8, "Deadline for application for direct admission to PhD programs (for Academic Year 2026)"],
+        [18, "Deadline for grade submissions (for Fall 2026)"],
+        [25, "Phase 3 of Course Selection (Jan. 25–27)"],
+        [31, "Fall Semester ends", "milestone"]
+      ]
+    }
+  ];
+
+  const SPRING_MONTHS = [
+    {
+      id: "feb-2027", label: "February 2027", short: "Feb '27",
+      year: 2027, monthIndex: 1,
+      firstWeekday: 1, days: 28,
+      holidaySpans: [
+        [4, 10, "Chinese New Year holidays (Feb. 4 – Feb. 10)"], 
+      ],
+      events: [
+        [1, "Spring Semester begins", "milestone"],
+        [1, "University Anniversary"],
+        [1, "Application for minor studies (including graduate and degree programs) and double majors begins (Feb. 1 – Mar. 5)"],
+        [4, "Chinese New Year holidays (Feb. 4 – Feb. 10)", "holiday"],
+        [15, "Spring Semester classes begin", "milestone"],
+        [15, "Course add/drop (Feb. 15 – Mar. 1) and intercollegiate course selection (Feb. 15–26) starts"],
+        [15, "Dormitory Application Opens (for Fall 2027)"],
+        [17, "Deadline for payment of tuition fees"],
+        [19, "Deadline for grade corrections (for Fall 2026)"],
+        [22, "The \u2018Friendly Campus Week\u2019 activities (Feb. 22–26)"],
+        [26, "Deadline for credit exemption"],
+        [26, "Deadline for intercollegiate course selection"],
+        [26, "Mei-Chu Contest (Feb. 26–28)"],
+        [28, "Peace Memorial Day", "holiday"]
+      ]
+    },
+    {
+      id: "mar-2027", label: "March 2027", short: "Mar '27",
+      year: 2027, monthIndex: 2,
+      firstWeekday: 1, days: 31,
+      events: [
+        [1, "Make-up holiday as Peace Memorial Day (no class)", "holiday"],
+        [1, "Deadline for course add/drop"],
+        [15, "Deadline for application for degree programs as international students (Fall 2027)"],
+        [26, "Deadline for getting a two-thirds (2/3) refund for graduates and those with a temporary leave or suspension from school"]
+      ]
+    },
+    {
+      id: "apr-2027", label: "April 2027", short: "Apr '27",
+      year: 2027, monthIndex: 3,
+      firstWeekday: 4, days: 30,
+      holidaySpans: [
+        [3, 6, "Children\u2019s Day and Tomb Sweeping Day (Apr. 3–6)"]
+      ],
+      events: [
+        [3, "Children\u2019s Day and Tomb Sweeping Day (Apr. 3–6)", "holiday"],
+        [7, "Intercollegiate activities (no class)", "holiday"],
+        [8, "The NCTU Anniversary"],
+        [8, "Mid-term Exams (Apr. 8–14)"],
+        [8, "Academic warning begins"],
+        [12, "The Academic Warning System is available for faculty members"],
+        [14, "The campus run"],
+        [16, "Deadline for continuing education proposals"],
+        [26, "Academic Warning – offering needed support to students with low academic standing"],
+        [29, "Deadline for getting a one-third (1/3) refund for graduates and those with a temporary leave or suspension from school"],
+        [30, "Make-up holiday as Labor Day (no class)", "holiday"]
+      ]
+    },
+    {
+      id: "may-2027", label: "May 2027", short: "May '27",
+      year: 2027, monthIndex: 4,
+      firstWeekday: 6, days: 31,
+      events: [
+        [1, "Labor Day", "holiday"],
+        [14, "Deadline for course withdrawal"],
+        [15, "The NYMU Anniversary"],
+        [19, "The School Aquatic Competition"],
+        [26, "University Council Meeting"],
+        [31, "Final Exams (May. 31 – Jun. 4)", "milestone"]
+      ]
+    },
+    {
+      id: "jun-2027", label: "June 2027", short: "Jun '27",
+      year: 2027, monthIndex: 5,
+      firstWeekday: 2, days: 30,
+      events: [
+        [5, "Commencement"],
+        [6, "College Commencement"],
+        [7, "Summer vacation begins", "milestone"],
+        [7, "Phase 1 of Course Selection (Jun. 7–10)"],
+        [9, "Dragon Boat Festival", "holiday"],
+        [14, "Phase 2 of Course Selection (Jun. 14–16)"],
+        [28, "Deadline for grade submissions (for Spring 2027)"]
+      ]
+    },
+    {
+      id: "jul-2027", label: "July 2027", short: "Jul '27",
+      year: 2027, monthIndex: 6,
+      firstWeekday: 4, days: 31,
+      events: [
+        [15, "Deadline for application for direct admission to PhD programs (For Academic Year 2027)"],
+        [31, "Spring Semester ends", "milestone"]
+      ]
+    }
+  ];
+
+  function isHoliday(text) {
+    return /holiday/i.test(text);
+  }
+
+  function spanHolidayLabel(m, d) {
+    if (!m.holidaySpans) return null;
+    for (const [start, end, label] of m.holidaySpans) {
+      if (d >= start && d <= end) return label;
+    }
+    return null;
+  }
+
+  // Week 1 of each semester starts the Sunday of the week classes begin; weeks run 1-16,
+  // matching the blue "week of semester" column in the original PDFs.
+  const FALL_WEEK_START = new Date(2026, 8, 6);
+  const SPRING_WEEK_START = new Date(2027, 1, 14);
+
+  // Class days: weekdays between the start of classes and the last day of finals,
+  // excluding holidays.
+  const FALL_CLASS_START = new Date(2026, 8, 7);
+  const FALL_CLASS_END = new Date(2026, 11, 24);
+  const SPRING_CLASS_START = new Date(2027, 1, 15);
+  const SPRING_CLASS_END = new Date(2027, 5, 4);
+
+  const FALL_CONFIG = { weekStart: FALL_WEEK_START, classStart: FALL_CLASS_START, classEnd: FALL_CLASS_END };
+  const SPRING_CONFIG = { weekStart: SPRING_WEEK_START, classStart: SPRING_CLASS_START, classEnd: SPRING_CLASS_END };
+
+  function weekNumberForRow(year, monthIndex, firstWeekday, rowIndex, weekStart) {
+    const rowSunday = new Date(year, monthIndex, 1 - firstWeekday + rowIndex * 7);
+    const diffDays = Math.round((rowSunday - weekStart) / 86400000);
+    const wk = Math.floor(diffDays / 7) + 1;
+    return (wk >= 1 && wk <= 16) ? wk : null;
+  }
+
+  function buildMonth(m, config) {
+    const section = document.createElement("section");
+    section.className = "month";
+    section.id = m.id;
+
+    const eventDays = {};
+    m.events.forEach(([day, text, type]) => {
+      if (!eventDays[day]) eventDays[day] = [];
+      eventDays[day].push({ text, type });
+    });
+
+    const monthRow = document.createElement("div");
+    monthRow.className = "month-row";
+
+    const label = document.createElement("h2");
+    label.className = "month-label";
+    label.textContent = MONTH_ABBR[m.monthIndex] + " " + m.year;
+    label.title = m.label;
+    monthRow.appendChild(label);
+
+    const body = document.createElement("div");
+    body.className = "month-body";
+
+    // Calendar grid, with a week-of-semester rail down the left side
+    const gridWrap = document.createElement("div");
+    gridWrap.className = "grid-wrap";
+
+    const calGrid = document.createElement("div");
+    calGrid.className = "cal-grid";
+
+    const wkHead = document.createElement("div");
+    wkHead.className = "wk-head";
+    wkHead.textContent = "Wk";
+    calGrid.appendChild(wkHead);
+
+    WEEKDAYS.forEach(w => {
+      const label = document.createElement("div");
+      label.className = "weekday-label";
+      label.textContent = w;
+      calGrid.appendChild(label);
+    });
+
+    const totalCells = m.firstWeekday + m.days;
+    const rowCount = Math.ceil(totalCells / 7);
+    let dayCounter = 1;
+
+    for (let r = 0; r < rowCount; r++) {
+      const wk = weekNumberForRow(m.year, m.monthIndex, m.firstWeekday, r, config.weekStart);
+      const wkCell = document.createElement("div");
+      wkCell.className = "wk-num" + (wk ? "" : " wk-num-empty");
+      wkCell.textContent = wk ? wk : "";
+      calGrid.appendChild(wkCell);
+
+      for (let c = 0; c < 7; c++) {
+        const cellIndex = r * 7 + c;
+        const cell = document.createElement("div");
+
+        if (cellIndex < m.firstWeekday || dayCounter > m.days) {
+          cell.className = "day-cell empty";
+        } else {
+          const d = dayCounter;
+          const entries = eventDays[d];
+          const spanLabel = spanHolidayLabel(m, d);
+          const holidayHere = (entries ? entries.some(e => e.type === "holiday") : false) || !!spanLabel; // (entries ? entries.some(e => isHoliday(e.text)) : false) || !!spanLabel;
+          const milestoneHere = entries ? entries.some(e => e.type === "milestone") : false;
+
+          let cls = "day-cell";
+
+          const cellDate = new Date(m.year, m.monthIndex, d);
+          const weekday = cellDate.getDay();
+          const isWeekend = weekday === 0 || weekday === 6;
+          const inClassRange = cellDate >= config.classStart && cellDate <= config.classEnd;
+          if (inClassRange && !isWeekend && !holidayHere) cls += " class-day";
+
+          if (holidayHere) cls += " has-holiday";
+          else if (milestoneHere) cls += " has-milestone";
+          else if (entries) cls += " has-event";
+
+          cell.className = cls;
+          cell.textContent = d;
+          if (entries) {
+            cell.title = entries.map(e => e.text).join(" \u2014 ");
+            cell.dataset.day = d;
+            const dot = document.createElement("span");
+            dot.className = "dot";
+            cell.appendChild(dot);
+          } else if (spanLabel) {
+            cell.title = spanLabel;
+            cell.style.cursor = "default";
+          }
+          dayCounter++;
+        }
+        calGrid.appendChild(cell);
+      }
+    }
+
+    gridWrap.appendChild(calGrid);
+    body.appendChild(gridWrap);
+
+    // Events list
+    const events = document.createElement("div");
+    events.className = "events";
+    m.events.forEach(([day, text, type]) => {
+      const holiday = type === "holiday"; // isHoliday(text);
+      const milestone = type === "milestone";
+      const row = document.createElement("div");
+      row.className = "event-row" + (holiday ? " holiday" : "") + (milestone ? " milestone" : "");
+      row.dataset.day = day;
+      let tag = "";
+      if (holiday) tag = '<span class="tag tag-holiday">Holiday</span>';
+      else if (milestone) tag = '<span class="tag tag-milestone">Milestone</span>';
+      row.innerHTML = `<div class="event-day">${day}</div><div class="event-text">${tag}${text}</div>`;
+      events.appendChild(row);
+    });
+    body.appendChild(events);
+    monthRow.appendChild(body);
+
+    section.appendChild(monthRow);
+    return section;
+  }
+
+  function wireInteractions(section) {
+    let selectedDay = null;
+
+    function rowsFor(day) {
+      return section.querySelectorAll('.event-row[data-day="' + day + '"]');
+    }
+    function cellFor(day) {
+      return section.querySelector('.day-cell[data-day="' + day + '"]');
+    }
+    function apply(day) {
+      rowsFor(day).forEach(r => r.classList.add("hl-linked"));
+      const c = cellFor(day);
+      if (c) c.classList.add("hl-linked");
+    }
+    function clear(day) {
+      rowsFor(day).forEach(r => r.classList.remove("hl-linked"));
+      const c = cellFor(day);
+      if (c) c.classList.remove("hl-linked");
+    }
+    function toggle(day) {
+      if (selectedDay === day) {
+        clear(day);
+        selectedDay = null;
+      } else {
+        if (selectedDay !== null) clear(selectedDay);
+        selectedDay = day;
+        apply(day);
+      }
+    }
+
+    section.querySelectorAll(".day-cell[data-day], .event-row[data-day]").forEach(el => {
+      const day = el.dataset.day;
+      el.addEventListener("mouseenter", () => apply(day));
+      el.addEventListener("mouseleave", () => { if (selectedDay !== day) clear(day); });
+      el.addEventListener("click", () => toggle(day));
+    });
+  }
+
+  function initSemesterTabs() {
+    const tabs = document.querySelectorAll(".semester-tab");
+    const panels = {
+      fall: document.getElementById("fall-panel"),
+      spring: document.getElementById("spring-panel")
+    };
+    const subtitles = {
+      fall: "Fall Semester \u00b7 August 2026 through January 2027",
+      spring: "Spring Semester \u00b7 February 2027 through July 2027"
+    };
+    const subtitleEl = document.getElementById("semester-subtitle");
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        const sem = tab.dataset.semester;
+        tabs.forEach(t => t.classList.toggle("active", t === tab));
+        Object.keys(panels).forEach(key => {
+          panels[key].hidden = key !== sem;
+        });
+        subtitleEl.textContent = subtitles[sem] || "";
+      });
+    });
+  }
+
+  function renderSemester(panelId, months, config) {
+    const panel = document.getElementById(panelId);
+    months.forEach(m => {
+      const section = buildMonth(m, config);
+      panel.appendChild(section);
+      wireInteractions(section);
+    });
+  }
+
+  renderSemester("fall-panel", FALL_MONTHS, FALL_CONFIG);
+  renderSemester("spring-panel", SPRING_MONTHS, SPRING_CONFIG);
+  initSemesterTabs();
+</script>
+
+</body>
+</html>
