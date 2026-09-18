@@ -35,7 +35,7 @@
       --ink-soft: #b3b6c2;
       --ink-faint: #7a8090;
       --line: #313848;
-      --navy: #7c9cd0;
+      --navy: #b9c2d1;
       --navy-deep: #a9c1e6;
       --text-strong: #e9e8e2;
       --neutral: #9aa0ad;
@@ -62,7 +62,7 @@
     --ink-soft: #b3b6c2;
     --ink-faint: #7a8090;
     --line: #313848;
-    --navy: #7c9cd0;
+    --navy: #b9c2d1;
     --navy-deep: #a9c1e6;
     --text-strong: #e9e8e2;
     --neutral: #9aa0ad;
@@ -106,7 +106,7 @@
   }
 
   .kicker {
-    font-size: 0.78rem;
+    font-size: clamp(1.0rem, 2.0vw, 1.3rem);
     letter-spacing: 0.03em;
     color: #cdd8ea;
     margin: 0 0 0.2rem;
@@ -375,7 +375,8 @@
     font-family: system-ui, sans-serif;
     font-weight: 700;
     font-size: 0.95rem;
-    color: var(--navy);
+    color: var(--ink);
+    /* color: var(--navy); */
     line-height: 1.3;
   }
 
