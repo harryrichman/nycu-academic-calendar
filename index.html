@@ -437,6 +437,15 @@
     });
   }
 
+  // Accepts "#spring", "#spring-semester", "#fall", "#fall-semester" (case-insensitive).
+  // Anything else (including no hash) resolves to null, so the caller can fall back to a default.
+  function semesterFromHash(hash) {
+    const key = hash.replace(/^#/, "").toLowerCase();
+    if (key === "spring" || key === "spring-semester") return "spring";
+    if (key === "fall" || key === "fall-semester") return "fall";
+    return null;
+  }
+
   function initSemesterTabs() {
     const tabs = document.querySelectorAll(".semester-tab");
     const panels = {
@@ -448,17 +457,30 @@
       spring: "Spring Semester \u00b7 February 2027 through July 2027"
     };
     const subtitleEl = document.getElementById("semester-subtitle");
+    const hashes = { fall: "#fall-semester", spring: "#spring-semester" };
+
+    function showSemester(sem, updateHash) {
+      const tab = document.querySelector('.semester-tab[data-semester="' + sem + '"]');
+      if (!tab) return;
+      tabs.forEach(t => t.classList.toggle("active", t === tab));
+      Object.keys(panels).forEach(key => {
+        panels[key].hidden = key !== sem;
+      });
+      subtitleEl.textContent = subtitles[sem] || "";
+      if (updateHash && window.location.hash !== hashes[sem]) {
+        history.replaceState(null, "", hashes[sem]);
+      }
+    }
 
     tabs.forEach(tab => {
-      tab.addEventListener("click", () => {
-        const sem = tab.dataset.semester;
-        tabs.forEach(t => t.classList.toggle("active", t === tab));
-        Object.keys(panels).forEach(key => {
-          panels[key].hidden = key !== sem;
-        });
-        subtitleEl.textContent = subtitles[sem] || "";
-      });
+      tab.addEventListener("click", () => showSemester(tab.dataset.semester, true));
     });
+
+    window.addEventListener("hashchange", () => {
+      showSemester(semesterFromHash(window.location.hash) || "fall", false);
+    });
+
+    showSemester(semesterFromHash(window.location.hash) || "fall", false);
   }
 
   function renderSemester(panelId, months, config) {
